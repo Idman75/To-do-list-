@@ -1,0 +1,19 @@
+public class Manager{
+    public Subject [] categories= new Subject [20];
+    public Manager(){
+    }
+    
+    public void printList(){
+    System.out.println("⋆⭒˚.⋆-Current To-do list-.⋆⭒˚⋆");
+    boolean isEmpty=true;
+    for (int i=0;i<categories.length;i++){
+        if(categories[i]!=null){
+            System.out.println("[" + i + "]"+ categories[i].getName() + ":" + categories[i].getTasks());
+            isEmpty=false;
+        }
+    }
+        if (isEmpty) {
+            System.out.println("No Subjects have been created yet. Choose option 1 to make one!!");
+        }
+    } 
+}
