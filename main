@@ -1,0 +1,84 @@
+import java.util.Scanner;
+public class Main
+{
+    public static void main(String[] args)
+    { Scanner input= new Scanner(System.in);
+    Manager myTodo= new Manager();
+    int subjectCount=0;
+    boolean running= true;
+  
+
+        while (running) {
+            myTodo.printList();
+            
+            System.out.println("\nOptions: [1] Create New Subject | [2] Add Task | [3] Remove Task | [4] Edit Subject Name | [5] Exit");
+            System.out.print("Choose an option number: ");
+            int action = input.nextInt();
+            input.nextLine(); 
+
+            if (action == 1) {
+                if (subjectCount < myTodo.categories.length) {
+                    System.out.print("Enter name for your new subject: ");
+                    String name = input.nextLine();
+                    
+                    myTodo.categories[subjectCount] = new Subject(name);
+                    System.out.println("Created " + name + " at index [" + subjectCount + "]");
+                    subjectCount++; 
+                } else {
+                    System.out.println("Your to-do list is full! (Max 3 subjects)");
+                }
+
+            } else if (action == 2) {
+                System.out.print("Enter subject index number (0, 1, or 2): ");
+                int subIdx = input.nextInt();
+                input.nextLine(); 
+                
+                if (subIdx >= 0 && subIdx < myTodo.categories.length && myTodo.categories[subIdx] != null) {
+                    System.out.print("Enter task description: ");
+                    String task = input.nextLine();
+                    myTodo.categories[subIdx].getTasks().add(task);
+                } else {
+                    System.out.println("Invalid slot or subject doesn't exist yet!");
+                }
+
+            } else if (action == 3) {
+                System.out.print("Enter subject index number: ");
+                int subIdx = input.nextInt();
+                System.out.print("Enter task index number to remove: ");
+                int taskIdx = input.nextInt();
+                input.nextLine(); 
+                
+                if (subIdx >= 0 && subIdx < myTodo.categories.length && myTodo.categories[subIdx] != null) {
+                    if (taskIdx >= 0 && taskIdx < myTodo.categories[subIdx].getTasks().size()) {
+                        myTodo.categories[subIdx].getTasks().remove(taskIdx);
+                        System.out.println("Task removed successfully.");
+                    } else {
+                        System.out.println("Invalid task index.");
+                    }
+                } else {
+                    System.out.println("Subject doesn't exist.");
+                }
+
+            } else if (action == 4) {
+                System.out.print("Enter subject index to rename: ");
+                int subIdx = input.nextInt();
+                input.nextLine(); 
+                
+                if (subIdx >= 0 && subIdx < myTodo.categories.length && myTodo.categories[subIdx] != null) {
+                    System.out.print("Enter new subject name: ");
+                    String newName = input.nextLine();
+                    myTodo.categories[subIdx].setName(newName);
+                } else {
+                    System.out.println("That subject doesn't exist yet!");
+                }
+
+            } else if (action == 5) {
+                running = false;
+                System.out.println("Program closed successfully.");
+            } else {
+                System.out.println("Invalid choice. Please select 1-5.");
+            }
+        }
+        input.close();
+    }
+}
